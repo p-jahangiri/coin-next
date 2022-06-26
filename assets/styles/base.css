@@ -1,0 +1,17 @@
+@import './typography.css';
+
+:root {
+    font-family: Poppins, Vazir !important;
+    margin: 0;
+    padding: 0;
+}
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+body {
+    font-family: Poppins, Vazir !important;
+}
