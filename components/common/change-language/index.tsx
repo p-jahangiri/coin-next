@@ -64,6 +64,7 @@ function ButtonChangeLanguage(
                                     height: '40px',
                                     fontSize: '20px',
                                     display: 'flex',
+                                    cursor: 'pointer',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     '&:hover': {
@@ -83,6 +84,7 @@ function ButtonChangeLanguage(
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    cursor: 'pointer',
                                     '&:hover': {
                                         backgroundColor: 'rgb(236, 147, 13)',
                                     },

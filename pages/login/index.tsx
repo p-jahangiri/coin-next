@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import LanguageIcon from '@mui/icons-material/Language';
-import { Box, Button, FormControlLabel, Radio, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import Router from 'next/router';
 import * as yup from 'yup';
@@ -17,11 +16,11 @@ import Link from '@lib/Link';
 interface FormProps {
     password?: string;
     email?: string;
+    remember?: boolean;
 }
 
 export default function Login() {
     const { t } = useTranslation();
-    const [select, setSelect] = useState(false);
 
     const schema = yup.object().shape({
         password: yup
@@ -43,6 +42,7 @@ export default function Login() {
         defaultValues: {
             email: '',
             password: '',
+            remember: false,
         },
         resolver,
         mode: 'all',
@@ -117,22 +117,26 @@ export default function Login() {
                 />
                 <Box
                     sx={{
+                        width: '100%',
                         display: ' flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         mb: 2,
                     }}
                 >
-                    <FormControlLabel
-                        onChange={() => setSelect(!select)}
-                        control={<Radio />}
-                        label={<Typography variant="caption">{t('Remember me')}</Typography>}
-                        sx={{
-                            '& .MuiSvgIcon-root': {
-                                fontSize: 18,
-                            },
-                        }}
-                    />
+                    <Box width={'50%'} mt={1}>
+                        <Input
+                            sx={{
+                                width: '22px',
+                            }}
+                            type="checkbox"
+                            control={control}
+                            name="remember"
+                        />
+                        <Typography ml={1} variant="caption">
+                            {t('Remember Me')}
+                        </Typography>
+                    </Box>
                     <Link
                         href="/forgot-password"
                         sx={{

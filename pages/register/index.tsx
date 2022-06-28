@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LanguageIcon from '@mui/icons-material/Language';
-import { Box, Button, FormControlLabel, Radio, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Router from 'next/router';
 import * as yup from 'yup';
 
@@ -17,11 +16,11 @@ interface FormProps {
     username?: string;
     password?: string;
     email?: string;
+    rules?: boolean;
 }
 
 export default function Register() {
     const { t } = useTranslation();
-    const [select, setSelect] = useState(false);
 
     const schema = yup.object().shape({
         username: yup.string().required(t('user name is required')),
@@ -41,6 +40,12 @@ export default function Register() {
         handleSubmit,
         formState: { errors, isValid },
     } = useForm<FormProps>({
+        defaultValues: {
+            username: '',
+            password: '',
+            email: '',
+            rules: false,
+        },
         resolver,
         mode: 'all',
     });
@@ -80,6 +85,7 @@ export default function Register() {
                     />
                 </Box>
                 <Box
+                    mt={-3}
                     display={'flex'}
                     flexDirection={'column'}
                     alignItems={'center'}
@@ -125,7 +131,21 @@ export default function Register() {
                     control={control}
                     helperText={errors.password?.message}
                 />
-                <Box
+
+                <Box mb={2} mt={1} width={'100%'}>
+                    <Input
+                        sx={{
+                            width: '22px',
+                        }}
+                        type="checkbox"
+                        control={control}
+                        name="rules"
+                    />
+                    <Typography ml={1} variant="caption">
+                        {t('I accept the terms and conditions')}
+                    </Typography>
+                </Box>
+                {/* <Box
                     sx={{
                         display: ' flex',
                         justifyContent: 'space-between',
@@ -147,7 +167,7 @@ export default function Register() {
                             },
                         }}
                     />
-                </Box>
+                </Box> */}
 
                 <Button
                     variant="contained"

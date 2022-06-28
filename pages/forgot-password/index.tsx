@@ -14,6 +14,7 @@ import Link from '@lib/Link';
 interface FormProps {
     password?: string;
     email?: string;
+    confirm?: string;
 }
 
 export default function Login() {
@@ -40,6 +41,7 @@ export default function Login() {
         defaultValues: {
             email: '',
             password: '',
+            confirm: '',
         },
         resolver,
         mode: 'all',
@@ -105,6 +107,7 @@ export default function Login() {
                     control={control}
                     helperText={errors.password?.message}
                 />
+
                 <InputPassword
                     sx={{
                         width: '100%',
@@ -113,7 +116,7 @@ export default function Login() {
                     name="confirm"
                     label={t('confirm password')}
                     control={control}
-                    // helperText={errors?.confirm?.message}
+                    helperText={errors.confirm?.message}
                 />
 
                 <Box mt={3} textAlign={'center'}>
