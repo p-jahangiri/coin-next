@@ -3,8 +3,8 @@ import { Box } from '@mui/system';
 import { Layout } from 'layout';
 import type { NextPage } from 'next';
 
-import MultiActionAreaCard from '@components/common/Card';
-import ScrollToTop from '@components/common/ScrollToTop';
+import MultiActionAreaCard from '@components/common/card';
+import ScrollToTop from '@components/common/scroll-button';
 import { Tab, TabIcon } from '@components/ui/home';
 import { useTranslation } from '@lib/hooks/useTranslation';
 

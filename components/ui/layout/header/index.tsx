@@ -1,14 +1,19 @@
 import React, { FC } from 'react';
-import { Box, Link, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box, Button, Typography } from '@mui/material';
 import { dataFilter, dataHeader, dataPop } from 'static/data';
 
-import PopoverPopupState from '@components/common/Popover';
-import SearchInput from '@components/common/SearchInput';
+import ButtonChangeLanguage from '@components/common/change-language';
+import SearchInput from '@components/common/input-search';
+import PopoverState from '@components/common/popover-State';
+import { useTranslation } from '@lib/hooks/useTranslation';
+import Link from '@lib/Link';
 
 import FilterBar from './filterBar';
 import MenuLeft from './menu';
 
 const Header: FC = () => {
+    const { t } = useTranslation();
     const [lang, setLang] = React.useState('English');
     const [id, setId] = React.useState('');
     return (
@@ -34,10 +39,26 @@ const Header: FC = () => {
                             backgroundColor: '#253137',
                         }}
                     >
-                        <PopoverPopupState language={setLang} />
+                        <ButtonChangeLanguage mr={1} language={setLang} icon={<ExpandMoreIcon />} />
                         <Typography fontSize={20} color={'white'}>
                             {lang}
                         </Typography>
+                    </Box>
+                    <Box mt={2} display={{ xs: 'none', md: 'flex' }} alignItems={'center'}>
+                        <ButtonChangeLanguage mr={1} language={setLang} icon={<ExpandMoreIcon />} />
+                        <Typography fontSize={20} color={'white'}>
+                            {lang}
+                        </Typography>
+                    </Box>
+                    <Box textAlign={'center'} mt={3}>
+                        <Link
+                            href="/login"
+                            sx={{
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <Button variant="outlined">{t('Login')}</Button>
+                        </Link>
                     </Box>
                 </MenuLeft>
                 <Box width={130}>
@@ -75,7 +96,7 @@ const Header: FC = () => {
                     ml={{ xs: 0, lg: 10 }}
                     sx={{ backgroundColor: '' }}
                 >
-                    <PopoverPopupState data={dataPop} receiveId={setId} />
+                    <PopoverState data={dataPop} receiveId={setId} />
                     {dataHeader.map((item, idx) => {
                         return (
                             <Link
@@ -116,11 +137,25 @@ const Header: FC = () => {
                         );
                     })}
                 </Box>
-                <Box display={{ xs: 'none', md: 'flex' }} alignItems={'center'}>
-                    <PopoverPopupState language={setLang} />
-                    <Typography fontSize={20} color={'white'}>
-                        {lang}
-                    </Typography>
+                <Box
+                    display={{ xs: 'none', md: 'flex' }}
+                    flexDirection={'column'}
+                    alignItems={'end'}
+                >
+                    <Box mb={2} display={'flex'} alignItems={'center'}>
+                        <ButtonChangeLanguage mr={1} language={setLang} icon={<ExpandMoreIcon />} />
+                        <Typography fontSize={20} color={'white'}>
+                            {lang}
+                        </Typography>
+                    </Box>
+                    <Link
+                        href="/login"
+                        sx={{
+                            textDecoration: 'none',
+                        }}
+                    >
+                        <Button variant="outlined">{t('Login')}</Button>
+                    </Link>
                 </Box>
             </Box>
             <Box
