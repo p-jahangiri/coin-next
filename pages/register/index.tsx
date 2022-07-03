@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LanguageIcon from '@mui/icons-material/Language';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Router from 'next/router';
 import * as yup from 'yup';
 
 import ButtonChangeLanguage from '@components/common/change-language';
 import Input from '@components/common/input';
-import InputPassword from '@components/common/input-password';
+import BasicModal from '@components/common/modal';
+import FormAdmin from '@components/ui/register/admin-form';
+import FormUser from '@components/ui/register/user-form';
 import { useTranslation } from '@lib/hooks/useTranslation';
 import { useYupValidationResolver } from '@lib/hooks/useYupValidationResolver';
 import Link from '@lib/Link';
@@ -21,7 +24,7 @@ interface FormProps {
 
 export default function Register() {
     const { t } = useTranslation();
-
+    const [open, setOpen] = useState(false);
     const schema = yup.object().shape({
         username: yup.string().required(t('user name is required')),
         password: yup
@@ -56,9 +59,10 @@ export default function Register() {
     };
     return (
         <Box
-            height={'100vh'}
-            px={{ xs: 2, sm: 20, md: 35, lg: 55, xl: 72 }}
-            py={5}
+            px={{ xs: 2, sm: 20, md: 35, lg: 55, xl: 71 }}
+            pt={1}
+            pb={3}
+            minHeight="100vh"
             sx={{ backgroundColor: '#daf2fd' }}
         >
             <Box
@@ -73,8 +77,9 @@ export default function Register() {
             >
                 <Box
                     sx={{
+                        width: 100,
                         display: 'flex',
-                        justifyContent: 'end',
+                        justifyContent: 'start',
                     }}
                 >
                     <ButtonChangeLanguage
@@ -85,7 +90,7 @@ export default function Register() {
                     />
                 </Box>
                 <Box
-                    mt={-3}
+                    mt={-7}
                     display={'flex'}
                     flexDirection={'column'}
                     alignItems={'center'}
@@ -93,105 +98,34 @@ export default function Register() {
                 >
                     <AddCircleOutlineIcon color="success" sx={{ fontSize: 50 }} />
 
-                    <Typography mt={2} variant="h6">
+                    <Typography mt={1} variant="h6">
                         {t('Sign Up')}
                     </Typography>
-                    <Typography mt={1} mb={3} variant="caption">
-                        {t('Please fill this form to create an account!')}
-                    </Typography>
                 </Box>
-                <Input
-                    sx={{
-                        width: '100%',
-                    }}
-                    control={control}
-                    name="username"
-                    label={t('user name')}
-                    placeholder={t('user name')}
-                    helperText={errors.username?.message}
+                <BasicModal
+                    name={t('Click to read the terms of cooperation')}
+                    title={t('Cooperation terms')}
+                    description={t(
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, printer et al. It is practical, many books in the past sixty-three percent of the present and the future, require a lot of knowledge of the community and professionals',
+                    )}
                 />
-                <Input
-                    sx={{
-                        width: '100%',
-                        mt: 2,
-                    }}
-                    control={control}
-                    name="email"
-                    label={t('email')}
-                    placeholder={t('email')}
-                    helperText={errors.email?.message}
-                />
-                <InputPassword
-                    sx={{
-                        width: '100%',
-                        mt: 2,
-                    }}
-                    name="password"
-                    label={t('password')}
-                    control={control}
-                    helperText={errors.password?.message}
-                />
-
-                <Box mb={2} mt={1} width={'100%'}>
+                <Box width={'100%'} mt={1}>
                     <Input
                         sx={{
-                            width: '22px',
+                            width: '16px',
                         }}
+                        size="small"
+                        variant="standard"
                         type="checkbox"
+                        onChange={() => setOpen(!open)}
                         control={control}
-                        name="rules"
+                        name="remember"
                     />
                     <Typography ml={1} variant="caption">
-                        {t('I accept the terms and conditions')}
+                        {t('Do you want to cooperate with us?')}
                     </Typography>
                 </Box>
-                {/* <Box
-                    sx={{
-                        display: ' flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        mb: 2,
-                    }}
-                >
-                    <FormControlLabel
-                        onChange={() => setSelect(!select)}
-                        control={<Radio />}
-                        label={
-                            <Typography variant="caption">
-                                {t('I accept the terms and conditions')}
-                            </Typography>
-                        }
-                        sx={{
-                            '& .MuiSvgIcon-root': {
-                                fontSize: 18,
-                            },
-                        }}
-                    />
-                </Box> */}
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit((data) => onSubmit(data))}
-                    type="submit"
-                    disabled={!isValid}
-                >
-                    {t('Sign Up')}
-                </Button>
-
-                <Box mt={2} textAlign={'center'}>
-                    <Typography variant="caption">
-                        {t('Do you have an account?')}
-                        <Link
-                            href="/login"
-                            sx={{
-                                textDecoration: 'none',
-                            }}
-                        >
-                            <Typography variant="caption">{t('Login')}</Typography>
-                        </Link>
-                    </Typography>
-                </Box>
+                {open ? <FormAdmin /> : <FormUser />}
 
                 <Link
                     href="/"

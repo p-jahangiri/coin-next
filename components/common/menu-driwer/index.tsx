@@ -15,7 +15,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function MenuLeft({ children }: { children?: React.ReactNode }) {
+interface Props {
+    children: React.ReactNode;
+    header?: React.ReactNode;
+}
+
+export default function MenuLeft({ children, header }: Props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
@@ -35,8 +40,9 @@ export default function MenuLeft({ children }: { children?: React.ReactNode }) {
                 edge="start"
                 sx={{ mr: 2, ...(open && { display: 'none' }), color: 'whitesmoke' }}
             >
-                <MenuIcon />
+                <MenuIcon fontSize="large" />
             </IconButton>
+
             <Drawer
                 sx={{
                     position: 'absolute',
@@ -52,8 +58,13 @@ export default function MenuLeft({ children }: { children?: React.ReactNode }) {
                 open={open}
             >
                 <DrawerHeader>
+                    {header}
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        {theme.direction === 'ltr' ? (
+                            <ChevronLeftIcon fontSize="large" color={'primary'} />
+                        ) : (
+                            <ChevronRightIcon />
+                        )}
                     </IconButton>
                 </DrawerHeader>
                 <Divider />

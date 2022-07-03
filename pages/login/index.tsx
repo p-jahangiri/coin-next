@@ -50,7 +50,7 @@ export default function Login() {
 
     const onSubmit = (data: FormProps) => {
         console.log(data, 'data');
-        Router.push('/');
+        Router.push('/admin');
     };
     return (
         <Box
@@ -124,14 +124,16 @@ export default function Login() {
                         mb: 2,
                     }}
                 >
-                    <Box width={'50%'} mt={1}>
+                    <Box mt={1}>
                         <Input
                             sx={{
-                                width: '22px',
+                                width: '16px',
                             }}
                             type="checkbox"
                             control={control}
                             name="remember"
+                            size="small"
+                            variant="standard"
                         />
                         <Typography ml={1} variant="caption">
                             {t('Remember Me')}
