@@ -14,31 +14,37 @@ interface FormProps {
     username?: string;
     password?: string;
     email?: string;
+    confirm?: string;
     cvFile?: File | null;
     idCard: any;
 }
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/pdf'];
 export default function FormAdmin() {
     const { t } = useTranslation();
 
     const schema = yup.object().shape({
         username: yup.string().required(t('user name is required')),
-        password: yup
-            .string()
-            .required(t('password is required'))
-            .min(8, t('Your password must be longer than 8 characters.')),
         email: yup
             .string()
             .email(t('email must be a valid email'))
             .required(t('email is required')),
+        password: yup
+            .string()
+            .required(t('password is required'))
+            .min(8, t('Your password must be longer than 8 characters.')),
+        confirm: yup
+            .string()
+            .required(t('password is required'))
+            .oneOf([yup.ref('password'), null], t("Passwords don't match")),
+
         cvFile: yup
             .mixed()
             .required(t('cv file is required'))
             .test(
                 'fileSize',
-                t('File Size must be less than 5MB'),
-                (value) => value && value[0].size <= 5000000,
+                t('File Size must be less than 3MB'),
+                (value) => value && value[0].size <= 3000000,
             ),
         idCard: yup
             .mixed()
@@ -115,12 +121,22 @@ export default function FormAdmin() {
             <InputPassword
                 sx={{
                     width: '100%',
-                    my: 2,
+                    mt: 1,
                 }}
                 name="password"
                 label={t('password')}
                 control={control}
                 helperText={errors.password?.message}
+            />
+            <InputPassword
+                sx={{
+                    width: '100%',
+                    my: 1,
+                }}
+                name="confirm"
+                label={t('confirm password')}
+                control={control}
+                helperText={errors.confirm?.message}
             />
 
             <Box>

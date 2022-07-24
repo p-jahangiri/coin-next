@@ -14,6 +14,28 @@ import Link from '@lib/Link';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+const listPanel = [
+    {
+        title: 'Dashboard',
+        pages: [{ title: 'Dashboard', link: '/dashboard' }],
+    },
+    {
+        title: 'user',
+        pages: [
+            { title: 'Reporter', link: '/admin/reporter' },
+            { title: "user's", link: '/admin/user' },
+        ],
+    },
+    {
+        title: 'news',
+        pages: [{ title: 'add news', link: '/admin/addNews' }],
+    },
+    {
+        title: 'sitting',
+        pages: [{ title: 'sitting', link: '/sitting/add' }],
+    },
+];
+
 const HeaderAdminPanel = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -48,10 +70,40 @@ const HeaderAdminPanel = () => {
                     </Box>
                 }
             >
-                {settings.map((setting) => (
-                    <Accordion key={setting} title={setting}>
-                        <MenuItem onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center">{setting}</Typography>
+                {listPanel.map((list, idx) => (
+                    <Accordion key={idx} title={list.title}>
+                        <MenuItem
+                            onClick={handleCloseUserMenu}
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '20px',
+                                ':hover': {
+                                    backgroundColor: 'transparent',
+                                },
+                            }}
+                        >
+                            {list.pages.map((page, idx) => (
+                                <Link
+                                    href={page.link}
+                                    key={idx}
+                                    sx={{
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    <Typography
+                                        textAlign="center"
+                                        color={'rgb(154, 156, 158)'}
+                                        sx={{
+                                            ':hover': {
+                                                color: 'blue',
+                                            },
+                                        }}
+                                    >
+                                        {page.title}
+                                    </Typography>
+                                </Link>
+                            ))}
                         </MenuItem>
                     </Accordion>
                 ))}

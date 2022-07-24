@@ -4,7 +4,6 @@ import { Box, Button, Typography } from '@mui/material';
 import { dataFilter, dataHeader, dataPop } from 'static/data';
 
 import ButtonChangeLanguage from '@components/common/change-language';
-import SearchInput from '@components/common/input-search';
 import MenuLeft from '@components/common/menu-driwer';
 import PopoverState from '@components/common/popover-State';
 import { useTranslation } from '@lib/hooks/useTranslation';
@@ -68,9 +67,9 @@ const Header: FC = () => {
                         alt="logo"
                     />
                 </Box>
-                <Box my={1} width={150}>
+                {/* <Box my={1} width={150}>
                     <SearchInput />
-                </Box>
+                </Box> */}
             </Box>
             <Box
                 px={{ xs: '0', md: '60px', lg: '80px' }}
@@ -177,9 +176,9 @@ const Header: FC = () => {
                         );
                     })}
                 </Box>
-                <Box my={1}>
+                {/* <Box my={1}>
                     <SearchInput />
-                </Box>
+                </Box> */}
             </Box>
         </React.Fragment>
     );

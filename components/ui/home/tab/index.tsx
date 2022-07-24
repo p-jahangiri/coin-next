@@ -7,11 +7,15 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
-import { TabsData } from 'static/data';
 
+import { getResponseNewsData } from '@interfaces/news/news.interface';
 import { useTranslation } from '@lib/hooks/useTranslation';
 
-export default function LabTabs() {
+interface Props {
+    data: getResponseNewsData[] | undefined;
+}
+
+const LabTabs: React.FC<Props> = ({ data }) => {
     const { t } = useTranslation();
     const [value, setValue] = React.useState('1');
 
@@ -19,6 +23,7 @@ export default function LabTabs() {
         setValue(newValue);
     };
 
+    const MostVisited = data?.sort((a, b) => b.view_count - a.view_count);
     return (
         <Box my={3} sx={{ boxShadow: '5px 5px 20px 2px rgb(0 0 0 / 0.25)' }}>
             <Grid
@@ -44,14 +49,14 @@ export default function LabTabs() {
                             </TabList>
                         </Box>
                         <TabPanel value="1" sx={{ width: '100%' }}>
-                            {TabsData?.map((item: any, index: number) => {
+                            {data?.slice(0, 5).map((item) => {
                                 return (
                                     <Box
-                                        key={index}
+                                        key={item.id}
                                         sx={{
-                                            display: 'flex',
                                             alignItems: 'center',
                                             height: '100px',
+
                                             borderBottom: 1,
                                             '&:last-child': {
                                                 border: 'none',
@@ -60,22 +65,22 @@ export default function LabTabs() {
                                     >
                                         <Typography
                                             sx={{
-                                                padding: '0 10px',
+                                                padding: '10px 10px',
                                                 color: 'black',
                                                 cursor: 'pointer',
                                             }}
                                         >
-                                            {t(item.title)}
+                                            {item.body}
                                         </Typography>
                                     </Box>
                                 );
                             })}
                         </TabPanel>
                         <TabPanel value="2">
-                            {TabsData?.map((item: any, index: number) => {
+                            {MostVisited?.slice(0, 5).map((item) => {
                                 return (
                                     <Box
-                                        key={index}
+                                        key={item.id}
                                         height={'100px'}
                                         display={'flex'}
                                         justifyContent={'space-between'}
@@ -87,22 +92,24 @@ export default function LabTabs() {
                                         }}
                                     >
                                         <Box
+                                            width={'100%'}
                                             px={2}
                                             mt={1}
                                             display={'flex'}
                                             flexDirection={'column'}
                                         >
                                             <Typography sx={{ color: 'black', cursor: 'pointer' }}>
-                                                {t(item.title)}
+                                                {item.body}
                                             </Typography>
                                             <Box
                                                 display={'flex'}
                                                 justifyContent={'flex-end'}
                                                 mt={1}
                                                 fontSize={'13px'}
+                                                gap={1}
                                             >
                                                 <VisibilityIcon fontSize="small" />
-                                                {item.visit}
+                                                {item.view_count}
                                             </Box>
                                         </Box>
                                     </Box>
@@ -114,4 +121,5 @@ export default function LabTabs() {
             </Grid>
         </Box>
     );
-}
+};
+export default LabTabs;

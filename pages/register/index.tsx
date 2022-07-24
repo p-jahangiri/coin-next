@@ -1,62 +1,43 @@
 import { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Typography } from '@mui/material';
-import Router from 'next/router';
-import * as yup from 'yup';
 
+// import Router from 'next/router';
 import ButtonChangeLanguage from '@components/common/change-language';
 import Input from '@components/common/input';
 import BasicModal from '@components/common/modal';
 import FormAdmin from '@components/ui/register/admin-form';
 import FormUser from '@components/ui/register/user-form';
 import { useTranslation } from '@lib/hooks/useTranslation';
-import { useYupValidationResolver } from '@lib/hooks/useYupValidationResolver';
 import Link from '@lib/Link';
 
 interface FormProps {
-    username?: string;
-    password?: string;
-    email?: string;
     rules?: boolean;
 }
 
+const SITE_KEY = '6Let8rwgAAAAADyAL_BQzFa8FEDfINOajPd8VR2Y';
+
 export default function Register() {
+    const { control } = useForm();
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
-    const schema = yup.object().shape({
-        username: yup.string().required(t('user name is required')),
-        password: yup
-            .string()
-            .required(t('password is required'))
-            .min(8, t('Your password must be longer than 8 characters.')),
-        email: yup
-            .string()
-            .email(t('email must be a valid email'))
-            .required(t('email is required')),
-    });
-    const resolver = useYupValidationResolver(schema);
+    const [isRecaptcha, setIsRecaptcha] = useState(false);
+    console.log('🚀 ~ file: index.tsx ~ line 29 ~ Register ~ isRecaptcha', isRecaptcha);
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm<FormProps>({
-        defaultValues: {
-            username: '',
-            password: '',
-            email: '',
-            rules: false,
-        },
-        resolver,
-        mode: 'all',
-    });
+    if (!isRecaptcha) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <ReCAPTCHA
+                    sitekey="6LfKRr0gAAAAADJ5hssNoaSjuD-cDSg4sEi4hd0u"
+                    onChange={() => setIsRecaptcha(true)}
+                />
+            </Box>
+        );
+    }
 
-    const onSubmit = (data: FormProps) => {
-        console.log(data, 'data');
-        Router.push('/');
-    };
     return (
         <Box
             px={{ xs: 2, sm: 20, md: 35, lg: 55, xl: 71 }}

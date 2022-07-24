@@ -18,7 +18,7 @@ function AccordionCard(
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography>{title}</Typography>
+                    <Typography fontSize={18}>{title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>{children}</AccordionDetails>
             </Accordion>

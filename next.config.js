@@ -6,4 +6,7 @@ module.exports = {
         defaultLocale: 'en',
         localeDetection: false,
     },
+    env: {
+        API_BASE_URL: 'https://coinmarketnews.shop:8080/api/',
+    },
 };

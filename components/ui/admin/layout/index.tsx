@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Box } from '@mui/material';
 
-import HeaderAdminPanel from '@components/ui/admin/header';
+import HeaderAdminPanel from './header';
 
 interface layoutProp {
     children?: React.ReactNode;

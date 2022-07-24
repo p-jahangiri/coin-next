@@ -17,6 +17,7 @@ interface FormProps {
     username?: string;
     password?: string;
     email?: string;
+    confirm?: string;
     rules?: boolean;
 }
 
@@ -25,14 +26,19 @@ export default function FormUser() {
 
     const schema = yup.object().shape({
         username: yup.string().required(t('user name is required')),
-        password: yup
-            .string()
-            .required(t('password is required'))
-            .min(8, t('Your password must be longer than 8 characters.')),
+
         email: yup
             .string()
             .email(t('email must be a valid email'))
             .required(t('email is required')),
+        password: yup
+            .string()
+            .required(t('password is required'))
+            .min(8, t('Your password must be longer than 8 characters.')),
+        confirm: yup
+            .string()
+            .required(t('password is required'))
+            .oneOf([yup.ref('password'), null], t("Passwords don't match")),
     });
     const resolver = useYupValidationResolver(schema);
 
@@ -87,12 +93,22 @@ export default function FormUser() {
             <InputPassword
                 sx={{
                     width: '100%',
-                    my: 2,
+                    mt: 2,
                 }}
                 name="password"
                 label={t('password')}
                 control={control}
                 helperText={errors.password?.message}
+            />
+            <InputPassword
+                sx={{
+                    width: '100%',
+                    my: 2,
+                }}
+                name="confirm"
+                label={t('confirm password')}
+                control={control}
+                helperText={errors.confirm?.message}
             />
 
             <Button
