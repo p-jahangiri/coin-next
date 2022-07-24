@@ -25,6 +25,6 @@
         },
         "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "pages/servis.jsx"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
     "exclude": ["node_modules"]
 }
