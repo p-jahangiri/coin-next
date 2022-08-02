@@ -14,21 +14,21 @@ import Link from '@lib/Link';
 interface Column {
     label: string;
     minWidth?: number;
-    align?: 'right';
+    align?: 'right' | 'left' | 'center';
 }
 
 const columns: Column[] = [
     { label: 'id', minWidth: 50 },
-    { label: 'username', minWidth: 100, align: 'right' },
+    { label: 'username', minWidth: 100, align: 'center' },
     {
         label: 'role',
         minWidth: 170,
-        align: 'right',
+        align: 'center',
     },
     {
         label: 'online',
         minWidth: 170,
-        align: 'right',
+        align: 'center',
     },
 ];
 
@@ -46,7 +46,7 @@ export default function GroupingTable({ data }: { data?: getResponseUsersDataTyp
     };
 
     return (
-        <Paper sx={{ width: '50%' }}>
+        <Paper sx={{ width: { xs: '100%', lg: '50%' } }}>
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -60,9 +60,9 @@ export default function GroupingTable({ data }: { data?: getResponseUsersDataTyp
                                 <TableCell
                                     key={idx}
                                     align={column.align}
-                                    style={{
+                                    sx={{
                                         top: 57,
-                                        minWidth: column.minWidth,
+                                        minWidth: { xs: 0, md: column.minWidth },
                                         backgroundColor: '#253137',
                                         color: 'white',
                                     }}
@@ -81,7 +81,7 @@ export default function GroupingTable({ data }: { data?: getResponseUsersDataTyp
                                         <TableCell component="th" scope="row">
                                             {row.id}
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="center">
                                             <Link
                                                 href={`/admin/user/${row.id}`}
                                                 key={row.id}
@@ -94,14 +94,14 @@ export default function GroupingTable({ data }: { data?: getResponseUsersDataTyp
                                             </Link>
                                         </TableCell>
                                         {row.lastLogon ? (
-                                            <TableCell align="right">{row.lastLogon}</TableCell>
+                                            <TableCell align="center">{row.lastLogon}</TableCell>
                                         ) : (
-                                            <TableCell align="right">3 day</TableCell>
+                                            <TableCell align="center">3 day</TableCell>
                                         )}
                                         {row.online ? (
-                                            <TableCell align="right">online</TableCell>
+                                            <TableCell align="center">online</TableCell>
                                         ) : (
-                                            <TableCell align="right">offline</TableCell>
+                                            <TableCell align="center">offline</TableCell>
                                         )}
                                     </TableRow>
                                 );

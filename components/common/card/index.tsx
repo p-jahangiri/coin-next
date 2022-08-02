@@ -2,12 +2,14 @@ import * as React from 'react';
 import { CardActionArea, CardActions } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
+import CardImg from 'assets/images/img.jpg';
+import Image from 'next/image';
 
 import { getResponseNewsData } from '@interfaces/news/news.interface';
 import { useTranslation } from '@lib/hooks/useTranslation';
+import Link from '@lib/Link';
 
 interface Props {
     data?: getResponseNewsData & any;
@@ -23,6 +25,7 @@ export default function MultiActionAreaCard({ data, loading }: Props) {
     return (
         <Card
             sx={{
+                position: 'relative',
                 maxWidth: 420,
                 minHeight: 380,
                 display: 'flex',
@@ -38,11 +41,16 @@ export default function MultiActionAreaCard({ data, loading }: Props) {
                 {loading ? (
                     <Skeleton animation="wave" variant="circular" width={40} height={40} />
                 ) : (
-                    <CardMedia
-                        component="img"
-                        image="https://images.cointelegraph.com/images/370_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjItMDYvMTVjYjBjYTAtMmVmNy00YjllLTkxYzctZjk5YTVmNzlkNjQ3LmpwZw==.jpg"
-                        alt="green iguana"
-                    />
+                    <Link href="https://bitsomon.com/ " target="_blank">
+                        <Image
+                            src={CardImg}
+                            alt="img"
+                            width="100%"
+                            height="67%"
+                            layout="responsive"
+                            objectFit="contain"
+                        />
+                    </Link>
                 )}
 
                 <CardContent>
@@ -54,8 +62,8 @@ export default function MultiActionAreaCard({ data, loading }: Props) {
             <Typography
                 position={'absolute'}
                 p={2}
-                mt={{ xs: 28, lg: 29 }}
-                ml={40}
+                mt={{ xs: 24, lg: 29 }}
+                ml={{ xs: 35, lg: 43 }}
                 height={10}
                 variant="h3"
                 sx={{

@@ -12,10 +12,10 @@ import { useTranslation } from '@lib/hooks/useTranslation';
 export default function Footer() {
     const { t } = useTranslation();
     const data = [
-        { title: 'About', href: '/' },
-        { title: 'Contact', href: '/' },
-        { title: 'Privacy', href: '/' },
-        { title: 'Terms', href: '/' },
+        { title: 'About', href: '' },
+        { title: 'Contact', href: '' },
+        { title: 'Privacy', href: '' },
+        { title: 'Terms', href: '' },
     ];
     const dataFollow = [
         {
@@ -97,10 +97,11 @@ export default function Footer() {
                         return (
                             <Link
                                 key={index}
-                                href={item.href}
+                                onClick={() => alert('It will be launched soon')}
                                 px={{ xs: 1, lg: 3 }}
                                 sx={{
                                     textDecoration: 'none',
+                                    cursor: 'pointer',
                                     color: 'whitesmoke',
                                     '&:hover': {
                                         color: 'rgb(255, 162, 0)',

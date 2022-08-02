@@ -53,6 +53,7 @@ function MyApp(props: MyAppProps) {
             <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                     <Component {...pageProps} />
+                    {/* <ReactQueryDevtools /> */}
                 </Hydrate>
             </QueryClientProvider>
             {/* </ThemeProvider> */}

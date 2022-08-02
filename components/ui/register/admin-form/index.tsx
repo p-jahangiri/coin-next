@@ -78,7 +78,6 @@ export default function FormAdmin() {
         resolver,
         mode: 'all',
     });
-    console.log('🚀 ~ file: index.tsx ~ line 60 ~ FormAdmin ~ errors', errors);
 
     const onSubmit = (data: FormProps) => {
         console.log(data, 'data');

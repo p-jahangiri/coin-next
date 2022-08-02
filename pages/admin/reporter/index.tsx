@@ -25,8 +25,7 @@ export default function Index() {
 
     if (isLoading) {
         return (
-            <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                {' '}
+            <Box mt={20} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                 <CircularProgress />
             </Box>
         );
@@ -50,9 +49,9 @@ export default function Index() {
                 <Typography variant="caption" mb={1} color="error">
                     {errorSearch ? 'User not found' : ''}
                 </Typography>
-                <Box width={'100%'} textAlign={'center'}>
+                <Box width={{ xs: '100%', md: '50%', lg: '30%' }} textAlign={'center'}>
                     <input
-                        style={{ width: '20%', padding: '10px 5px ', outline: 'none' }}
+                        style={{ width: '80%', padding: '10px 5px ', outline: 'none' }}
                         type="text"
                         placeholder="search user ..."
                         onChange={(e) => setValue(e.target.value)}

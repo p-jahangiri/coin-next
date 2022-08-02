@@ -47,7 +47,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const icons = [{ icon: <ChevronLeftIcon /> }, { icon: <ChevronRightIcon /> }];
-const TabIcon = () => {
+export default function IconLabelTabs() {
     const { t } = useTranslation();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -128,5 +128,4 @@ const TabIcon = () => {
             </Box>
         </Box>
     );
-};
-export default TabIcon;
+}

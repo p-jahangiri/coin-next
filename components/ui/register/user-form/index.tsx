@@ -4,7 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Box, Button, IconButton, Typography } from '@mui/material';
-import Router from 'next/router';
+import gate from 'gate';
 import * as yup from 'yup';
 
 import Input from '@components/common/input';
@@ -57,9 +57,13 @@ export default function FormUser() {
         mode: 'all',
     });
 
-    const onSubmit = (data: FormProps) => {
-        console.log(data, 'data');
-        Router.push('/');
+    const register = async (props: any) => {
+        const data = await gate.postSignup(props);
+        console.log('🚀 ~ file: index.tsx ~ line 64 ~ register ~ data', data);
+    };
+
+    const onSubmit = (dataForm: FormProps) => {
+        register(dataForm);
     };
     const data = [
         { name: 'Google', icon: <GoogleIcon /> },

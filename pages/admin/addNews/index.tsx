@@ -68,7 +68,7 @@ export default function AddNews() {
                     },
                 }}
             >
-                <Box width={'40%'} mt={4}>
+                <Box width={{ sx: '80%', lg: '40%' }} px={{ xs: '20px' }} mt={4}>
                     <Box my={3} textAlign={'center'} width={'50%'}>
                         <Select
                             defaultValue="news"

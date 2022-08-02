@@ -18,8 +18,11 @@ const users = {
     getUserById: (id?: string | string[]) => api.get<getResponseUsersDataType>(`user/${id}`),
     deleteUserById: (id: string) => api.delete(`user/${id}`),
 };
-
+const posts = {
+    postSignup: (data: any) => api.post('signup', data),
+};
 export default {
     ...gets,
+    ...posts,
     ...users,
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { Button, Grid, Typography } from '@mui/material';
@@ -11,17 +11,20 @@ import type { NextPage } from 'next';
 import MultiActionAreaCard from '@components/common/card';
 import SearchInput from '@components/common/input-search';
 import ScrollToTop from '@components/common/scroll-button';
+import MyTradingViewWidget from '@components/common/tradingView';
 import { Tab } from '@components/ui/home';
 import TabIcon from '@components/ui/home/tab/tabIcon';
 import { getResponseNewsData } from '@interfaces/news/news.interface';
 import { useTranslation } from '@lib/hooks/useTranslation';
+import Link from '@lib/Link';
 
 const Home: NextPage = () => {
     const [open, setOpen] = useState(false);
     const [dataSearch, setDataSearch] = useState<getResponseNewsData[]>();
-    console.log('🚀 ~ file: index.tsx ~ line 20 ~ dataSearch', dataSearch);
     const { isLoading, data } = useQuery('news', gate.getNews);
-
+    const [tradeData, setTradeData] = useState<any>();
+    console.log('🚀 ~ file: index.tsx ~ line 27 ~ tradeData', tradeData);
+    const prices = useRef<any>(null);
     const handelSearch = (value: string) => {
         if (value) {
             setDataSearch(
@@ -29,6 +32,15 @@ const Home: NextPage = () => {
             );
         }
     };
+    useEffect(() => {
+        const ws = new WebSocket(
+            'wss://stream.binance.com:9443/ws/ltcusdt@trade/adausdt@trade/ethbtc@trade',
+        );
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log('🚀 ~ file: index.tsx ~ line 43 ~ useEffect ~ data', data);
+        };
+    }, []);
 
     const { t } = useTranslation();
 
@@ -41,17 +53,29 @@ const Home: NextPage = () => {
     }
     return (
         <Layout footer header>
+            <MyTradingViewWidget />
             <Box
-                sx={{
-                    display: { xs: 'none', lg: 'flex' },
-                    position: 'absolute',
-                    right: 110,
-                    top: 130,
-                }}
+                py={1}
+                px={{ xs: 2, md: 11, lg: 14 }}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ backgroundColor: 'rgb(218, 168, 17)' }}
             >
+                <Link
+                    href="/login"
+                    sx={{
+                        textDecoration: 'none',
+                    }}
+                >
+                    <Button variant="contained" color="primary">
+                        {t('Login')}
+                    </Button>
+                </Link>
                 <SearchInput onClick={handelSearch} />
             </Box>
-            <Box mx={{ sm: 1, md: 8, lg: 13 }} my={{ xs: 1, md: 3, lg: 5 }}>
+
+            <Box mx={{ sm: 1, md: 8, lg: 13 }} my={{ xs: 1, md: 3, lg: 2 }}>
                 <Box id="back-to-top-anchor">
                     <img
                         width={'100%'}
@@ -98,7 +122,7 @@ const Home: NextPage = () => {
                         );
                     })
                 ) : (
-                    <>
+                    <Box px={{ xs: 2, lg: 0 }}>
                         <Tab data={data} />
 
                         {/* <Box
@@ -195,7 +219,7 @@ const Home: NextPage = () => {
                                 </Button>
                             </Box>
                         )}
-                    </>
+                    </Box>
                 )}
             </Box>
             <ScrollToTop />

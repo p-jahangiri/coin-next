@@ -25,7 +25,6 @@ export default function Register() {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [isRecaptcha, setIsRecaptcha] = useState(false);
-    console.log('🚀 ~ file: index.tsx ~ line 29 ~ Register ~ isRecaptcha', isRecaptcha);
 
     if (!isRecaptcha) {
         return (

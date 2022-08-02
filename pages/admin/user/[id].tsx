@@ -36,31 +36,42 @@ export default function User() {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                flexDirection: { xs: 'column', md: 'row' },
                             }}
                         >
                             <Box
                                 sx={{
                                     width: '150px',
                                     height: '150px',
-                                    display: 'flex',
                                     boxShadow: 1,
+                                    borderRadius: '10px',
                                 }}
                             >
-                                <Image width={150} height="100%" src={UserImg} alt="avatar" />
+                                <Image
+                                    style={{ borderRadius: '10px' }}
+                                    width="100%"
+                                    height="100%"
+                                    layout="responsive"
+                                    objectFit="contain"
+                                    src={UserImg}
+                                    alt="avatar"
+                                />
                             </Box>
                             <Box
                                 sx={{
+                                    mt: { xs: '10px', md: '0' },
                                     ml: '20px',
+                                    textAlign: 'center',
                                 }}
                             >
                                 <Typography variant="h6" mb={1}>
                                     username : {data.username}
                                 </Typography>
                                 <Typography variant="h6" mb={1}>
-                                    created_at : {data.created_at}
+                                    created_at : {data.created_at.split('T')[0]}
                                 </Typography>
                                 <Typography variant="h6" mb={1}>
-                                    updated_at : {data.updated_at}
+                                    updated_at : {data.updated_at.split('T')[0]}
                                 </Typography>
                                 <Typography variant="h6" mb={1}>
                                     last Login : {data.lastLogon ? data.lastLogon : '3 day'}

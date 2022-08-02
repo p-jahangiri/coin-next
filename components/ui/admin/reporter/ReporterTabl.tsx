@@ -14,21 +14,21 @@ import Link from '@lib/Link';
 interface Column {
     label: string;
     minWidth?: number;
-    align?: 'right';
+    align?: 'right' | 'left' | 'center';
 }
 
 const columns: Column[] = [
-    { label: 'id', minWidth: 50 },
-    { label: 'name', minWidth: 100, align: 'right' },
+    { label: 'id', minWidth: 30 },
+    { label: 'name', minWidth: 100, align: 'center' },
     {
         label: 'register',
         minWidth: 170,
-        align: 'right',
+        align: 'center',
     },
     {
         label: 'created',
         minWidth: 170,
-        align: 'right',
+        align: 'center',
     },
 ];
 
@@ -46,7 +46,11 @@ export default function ReporterTable({ data }: { data?: getResponseReporterData
     };
 
     return (
-        <Paper sx={{ width: '50%' }}>
+        <Paper
+            sx={{
+                width: { xs: '100%', lg: '50%' },
+            }}
+        >
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -55,14 +59,18 @@ export default function ReporterTable({ data }: { data?: getResponseReporterData
                                 reporter list
                             </TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow
+                            sx={{
+                                overflowX: 'auto',
+                            }}
+                        >
                             {columns.map((column, idx) => (
                                 <TableCell
                                     key={idx}
                                     align={column.align}
-                                    style={{
+                                    sx={{
                                         top: 57,
-                                        minWidth: column.minWidth,
+                                        minWidth: { xs: 0, lg: column.minWidth },
                                         backgroundColor: '#253137',
                                         color: 'white',
                                     }}
@@ -81,11 +89,12 @@ export default function ReporterTable({ data }: { data?: getResponseReporterData
                                         <TableCell component="th" scope="row">
                                             {row.id}
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="center">
                                             <Link
                                                 href={`/admin/reporter/${row.id}`}
                                                 key={row.id}
                                                 sx={{
+                                                    padding: '0',
                                                     textDecoration: 'none',
                                                     color: 'black',
                                                 }}
@@ -93,10 +102,20 @@ export default function ReporterTable({ data }: { data?: getResponseReporterData
                                                 {row.last_name} {row.first_name}
                                             </Link>
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell
+                                            align="center"
+                                            sx={{
+                                                px: '0',
+                                            }}
+                                        >
                                             {row.register_date.split(' ')[0]}
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell
+                                            align="center"
+                                            sx={{
+                                                px: '0',
+                                            }}
+                                        >
                                             {row.created_at.split('T')[0]}
                                         </TableCell>
                                     </TableRow>
